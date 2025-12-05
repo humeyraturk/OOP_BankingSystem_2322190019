@@ -1,7 +1,7 @@
 # 🏦 OOP Banking System - Stage 1: Architecture & Design
 
 **Course:** Banking and Payment System  
-**Student ID:** `<YOUR_STUDENT_ID>`  
+**Student ID:** `Hümeyra TÜRK - 2322190019`  
 **Branch:** `S1_Design`
 
 ---
