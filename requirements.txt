@@ -1,3 +1,5 @@
 streamlit==1.29.0
 pytest==7.4.3
 requests==2.31.0
+mypy==1.7.1      # README'de bahsettiğin "Type Checking" için
+black==23.11.0   # README'de bahsettiğin "PEP 8 Style" için
