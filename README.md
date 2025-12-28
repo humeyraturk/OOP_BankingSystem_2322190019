@@ -1,6 +1,6 @@
 🏦 OOP Banking System - Stage 3: Final Release (Advanced Application)
 Course: Banking and Payment System
-Student ID: 2322190019
+Student ID: Hümeyra TÜRK - 2322190019
 Branch: S3_AdvancedApplication
 
 📋 Project Overview
@@ -324,10 +324,10 @@ source venv/bin/activate
 pip install -r requirements.txt
 Running the Application
 bash# Launch the Streamlit Web GUI
-streamlit run final_demo.py
-
-# Alternative: Use modular version
 streamlit run streamlit_app.py
+
+# Alternative: Use hybrid demo version
+streamlit run final_demo.py
 The application will open in your browser at http://localhost:8501
 🔐 Login Credentials (Demo)
 For presentation purposes, the system initializes with:
@@ -425,9 +425,10 @@ Deployment: Containerize with Docker, deploy to cloud
 
 
 👨‍💻 Author
+Student Name: Hümeyra TÜRK
 Student ID: 2322190019
 Course: Banking and Payment System
-Institution: [ıSTANBUL ESENYURT UNIVERSITY]
+Institution: Istanbul Esenyurt University
 Academic Year: 2024-2025
 
 📄 License
@@ -438,3 +439,14 @@ This project is submitted as part of academic coursework and demonstrates master
 Frankfurter API for free currency exchange rates
 Streamlit for rapid UI development
 Python Community for excellent libraries and documentation
+
+
+🔗 References
+
+Python Official Documentation: https://docs.python.org/3/
+Type Hints (PEP 484): https://peps.python.org/pep-0484/
+Dataclasses (PEP 557): https://peps.python.org/pep-0557/
+Abstract Base Classes: https://docs.python.org/3/library/abc.html
+Domain-Driven Design: Eric Evans
+Clean Architecture: Robert C. Martin
+Streamlit Documentation: https://docs.streamlit.io/
