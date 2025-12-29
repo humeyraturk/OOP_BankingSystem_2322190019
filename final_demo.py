@@ -212,7 +212,56 @@ class ExchangeRateService:
 # 3. WEB ARAYÜZÜ (STREAMLIT)
 # ==========================================
 
-st.set_page_config(page_title="Final Banking Demo", page_icon="🏦", layout="wide")
+# --- 🎨 ÖZEL TASARIM (LIGHT THEME) ---
+# st.set_page_config satırının HEMEN ALTINA bunu yapıştır:
+
+# --- 🎨 ÖZEL TASARIM (LIGHT THEME - BEYAZ BUTONLAR) ---
+st.markdown("""
+    <style>
+        /* Ana Arka Plan: Açık Gri */
+        .stApp {
+            background-color: #F0F2F6;
+            color: #000000;
+        }
+        
+        /* Sol Menü: Beyaz */
+        [data-testid="stSidebar"] {
+            background-color: #FFFFFF;
+            border-right: 1px solid #E0E0E0;
+        }
+
+        /* Yazılar: Simsiyah */
+        h1, h2, h3, h4, h5, h6, p, label, span, div {
+            color: #000000 !important;
+            font-family: 'Helvetica Neue', sans-serif;
+        }
+
+        /* --- BUTON AYARLARI (İstediğin Gibi) --- */
+        .stButton>button {
+            background-color: #FFFFFF; /* Buton Rengi: BEYAZ */
+            color: #000000 !important; /* Yazı Rengi: SİYAH */
+            border: 2px solid #000000; /* Çerçeve: SİYAH (Belirgin olsun) */
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        /* Butonun üzerine gelince (Hover Efekti) */
+        .stButton>button:hover {
+            background-color: #000000; /* Arka plan siyah olsun */
+            color: #FFFFFF !important; /* Yazı beyaz olsun */
+            transform: scale(1.02); /* Hafif büyüsün */
+            cursor: pointer;
+        }
+        
+        /* Input alanları */
+        .stTextInput>div>div>input {
+            background-color: #FFFFFF;
+            color: #000000;
+            border: 1px solid #CCCCCC;
+        }
+    </style>
+""", unsafe_allow_html=True)
 
 # LOGIN SCREEN (BASIT AUTHENTICATION)
 if 'logged_in' not in st.session_state:
@@ -254,7 +303,13 @@ if 'init' not in st.session_state:
 
 # Sidebar
 with st.sidebar:
-    st.title("🏦 OOP Bank")
+    try:
+        # width değerini 300 yaparak logoyu biraz daha belirgin hale getiriyoruz
+        st.image("logo.png", width=300) 
+    except:
+        st.warning("Logo yüklenemedi!")
+        
+    st.title("💎HT FİNANS")
     st.success("👤 Hümeyra Türk")
     secim = st.radio("Hesap Seç:", ["Vadeli Hesap (Savings)", "Vadesiz Hesap (Checking)"])
     
