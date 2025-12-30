@@ -3,8 +3,20 @@ import datetime
 import requests
 import json
 import os
+import base64  # Logo okumak için gerekli
 from enum import Enum
 from typing import List, Dict
+
+# ==========================================
+# 0. YARDIMCI FONKSİYONLAR
+# ==========================================
+def get_image_base64(image_path):
+    """Logoyu HTML içinde göstermek için şifreler"""
+    try:
+        with open(image_path, "rb") as img_file:
+            return base64.b64encode(img_file.read()).decode()
+    except:
+        return ""
 
 # ==========================================
 # 1. TEMEL YAPILAR (MODELS)
@@ -90,9 +102,6 @@ class Account:
         return True
 
     def save_to_disk(self):
-        # Persistence (Kalıcılık) işlemi burada yapılır
-        # Basitlik için sadece Streamlit Session'a yazıyoruz, 
-        # ama aşağıda "PersistenceService" bunu dosyaya dökecek.
         if 'persistence' in st.session_state:
             st.session_state.persistence.save_all()
 
@@ -109,7 +118,6 @@ class SavingsAccount(Account):
         interest_val = self.balance.amount * self.interest_rate
         interest_money = Money(interest_val, self.balance.currency)
         
-        # Bakiye güncelleme
         self._balance = Money(self.balance.amount + interest_val, self.balance.currency)
         
         t = Transaction(interest_money, f"Faiz Geliri (%{self.interest_rate*100})", TransactionType.INTEREST)
@@ -146,7 +154,6 @@ class FraudDetectionService:
         return True, "Güvenli"
 
 class PersistenceService:
-    """Verileri JSON dosyasına kaydeder ve okur (Gerçek Kalıcılık)"""
     FILE_NAME = "bank_data.json"
 
     @staticmethod
@@ -173,7 +180,7 @@ class PersistenceService:
     @staticmethod
     def load_all():
         if not os.path.exists(PersistenceService.FILE_NAME):
-            return False # Dosya yoksa varsayılanları yükle
+            return False 
         
         try:
             with open(PersistenceService.FILE_NAME, "r") as f:
@@ -212,8 +219,8 @@ class ExchangeRateService:
 # 3. WEB ARAYÜZÜ (STREAMLIT)
 # ==========================================
 
-# --- 🎨 ÖZEL TASARIM (LIGHT THEME) ---
-# st.set_page_config satırının HEMEN ALTINA bunu yapıştır:
+# --- AYARLAR ---
+st.set_page_config(page_title="HT Finans Portalı", page_icon="📈", layout="wide")
 
 # --- 🎨 ÖZEL TASARIM (LIGHT THEME - BEYAZ BUTONLAR) ---
 st.markdown("""
@@ -236,25 +243,24 @@ st.markdown("""
             font-family: 'Helvetica Neue', sans-serif;
         }
 
-        /* --- BUTON AYARLARI (İstediğin Gibi) --- */
+        /* Butonlar: Beyaz ve Siyah Çerçeveli */
         .stButton>button {
-            background-color: #FFFFFF; /* Buton Rengi: BEYAZ */
-            color: #000000 !important; /* Yazı Rengi: SİYAH */
-            border: 2px solid #000000; /* Çerçeve: SİYAH (Belirgin olsun) */
+            background-color: #FFFFFF;
+            color: #000000 !important;
+            border: 2px solid #000000;
             border-radius: 8px;
             font-weight: bold;
             transition: all 0.3s ease;
         }
         
-        /* Butonun üzerine gelince (Hover Efekti) */
+        /* Butonun üzerine gelince (Siyah olsun) */
         .stButton>button:hover {
-            background-color: #000000; /* Arka plan siyah olsun */
-            color: #FFFFFF !important; /* Yazı beyaz olsun */
-            transform: scale(1.02); /* Hafif büyüsün */
+            background-color: #000000;
+            color: #FFFFFF !important;
             cursor: pointer;
         }
         
-        /* Input alanları */
+        /* Giriş Kutuları (Input) */
         .stTextInput>div>div>input {
             background-color: #FFFFFF;
             color: #000000;
@@ -263,26 +269,40 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# LOGIN SCREEN (BASIT AUTHENTICATION)
+# LOGIN SCREEN (KUSURSUZ ORTALAMA - HT FİNANS)
 if 'logged_in' not in st.session_state:
     st.session_state.logged_in = False
 
 if not st.session_state.logged_in:
-    col1, col2, col3 = st.columns([1,2,1])
+    col1, col2, col3 = st.columns([1, 1.5, 1])
+    
     with col2:
-        st.image("https://cdn-icons-png.flaticon.com/512/2830/2830284.png", width=100)
-        st.title("🔒 Güvenli Banka Girişi")
+        st.markdown("<br><br>", unsafe_allow_html=True) 
+        
+        # HTML İLE ORTALAMA (Yazı Rengi: SİYAH, Logo Ortada)
+        st.markdown(f"""
+            <div style="text-align: center;">
+                <img src="data:image/png;base64,{get_image_base64('logo.png')}" width="200" style="margin-bottom: 20px;">
+                <h1 style="color: #000000; margin-bottom: 0;">🏛️ HT FİNANS</h1>
+                <h3 style="color: #555555; font-weight: normal; margin-top: 5px;">Güvenli Giriş Paneli</h3>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("<br>", unsafe_allow_html=True)
+
         username = st.text_input("Kullanıcı Adı (admin)")
         password = st.text_input("Şifre (1234)", type="password")
         
-        if st.button("Giriş Yap"):
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        if st.button("Giriş Yap", use_container_width=True):
             if username == "admin" and password == "1234":
                 st.session_state.logged_in = True
-                st.success("Giriş Başarılı!")
+                st.session_state["user"] = "Hümeyra Türk"
                 st.rerun()
             else:
-                st.error("Hatalı Kullanıcı Adı veya Şifre!")
-    st.stop() # Giriş yapılmadıysa aşağıyı gösterme
+                st.error("Hatalı kullanıcı adı veya şifre!")
+    st.stop() 
 
 # --- GİRİŞ YAPILDIKTAN SONRAKİ KISIM ---
 
@@ -291,11 +311,9 @@ if 'init' not in st.session_state:
     st.session_state.exchange = ExchangeRateService()
     st.session_state.persistence = PersistenceService()
     
-    # Önce dosyadan yüklemeyi dene
     loaded = PersistenceService.load_all()
     
     if not loaded:
-        # Dosya yoksa varsayılan değerleri ata
         st.session_state.savings = SavingsAccount("TR_VADELI", "Hümeyra Türk", Money(5000, Currency.TRY))
         st.session_state.checking = CheckingAccount("TR_VADESIZ", "Hümeyra Türk", Money(2000, Currency.TRY))
     
@@ -304,12 +322,11 @@ if 'init' not in st.session_state:
 # Sidebar
 with st.sidebar:
     try:
-        # width değerini 300 yaparak logoyu biraz daha belirgin hale getiriyoruz
-        st.image("logo.png", width=300) 
+        st.image("logo.png", width=250) 
     except:
         st.warning("Logo yüklenemedi!")
         
-    st.title("💎HT FİNANS")
+    st.title("🏛️ HT FİNANS")
     st.success("👤 Hümeyra Türk")
     secim = st.radio("Hesap Seç:", ["Vadeli Hesap (Savings)", "Vadesiz Hesap (Checking)"])
     
@@ -326,7 +343,8 @@ with st.sidebar:
 st.header(f"💳 {secim} Paneli")
 col1, col2, col3 = st.columns(3)
 col1.metric("Bakiye", f"{aktif_hesap.balance.amount:.2f} {aktif_hesap.balance.currency.value}")
-col2.metric("Özellik", f"%15 Faiz" if isinstance(aktif_hesap, SavingsAccount) else "1000 TRY Eksi Limit")
+ozellik_metni = "%15 Faiz" if secim == "Vadeli Hesap (Savings)" else "1000 TRY Eksi Limit"
+col2.metric("Özellik", ozellik_metni)
 col3.metric("İşlem Sayısı", len(aktif_hesap.transactions))
 
 # Sekmeler
@@ -371,13 +389,49 @@ with tab2:
     st.subheader("Canlı Kurlar (API)")
     if st.button("Kurları Güncelle"):
         st.session_state.exchange.update_web()
-    st.write(st.session_state.exchange.rates)
+    
+    # API Verisini Güzel Göster
+    import json
+    st.markdown("### 📊 Güncel Kur Verisi")
+    st.code(json.dumps(st.session_state.exchange.rates, indent=4), language='json')
 
 with tab3:
-    if isinstance(aktif_hesap, SavingsAccount):
-        if st.button("Ay Sonu Faizini İşlet"):
+    st.header("⚙️ Yönetici Paneli")
+    
+    # 1. FAİZ İŞLEMLERİ (Sadece Vadeli Hesapta Görünür)
+    if secim == "Vadeli Hesap (Savings)":
+        st.subheader("💰 Faiz Yönetimi")
+        st.info(f"Mevcut Faiz Oranı: %{aktif_hesap.interest_rate * 100}")
+        
+        if st.button("📅 Ay Sonu Faizini İşlet"):
             kazanc = aktif_hesap.apply_interest()
-            st.success(f"Faiz Eklendi: {kazanc}")
+            st.balloons() 
+            st.success(f"Tebrikler! Hesabına {kazanc} faiz geliri eklendi.")
+            import time
+            time.sleep(1)
             st.rerun()
     else:
-        st.warning("Sadece Vadeli hesapta faiz olur.")
+        st.info("ℹ️ Faiz işlemleri sadece Vadeli Hesap (Savings) seçiliyken aktiftir.")
+
+    st.markdown("---") # Araya çizgi çek
+
+    # 2. SİSTEMİ SIFIRLAMA (RESET)
+    st.subheader("🚨 Tehlikeli Bölge")
+    st.write("Tüm verileri silip başlangıç bakiyelerine (5000 TL / 2000 TL) döner.")
+    
+    if st.button("♻️ Fabrika Ayarlarına Dön (Sıfırla)", type="primary"):
+        # Dosyayı Sil
+        if os.path.exists("bank_data.json"):
+            os.remove("bank_data.json")
+        
+        # Hafızayı Temizle
+        if 'savings' in st.session_state: del st.session_state['savings']
+        if 'checking' in st.session_state: del st.session_state['checking']
+        if 'init' in st.session_state: del st.session_state['init']
+        
+        st.toast("Sistem Sıfırlandı! Yeniden başlatılıyor...", icon="✅")
+        
+        # Sayfayı Yenile
+        import time
+        time.sleep(1)
+        st.rerun()

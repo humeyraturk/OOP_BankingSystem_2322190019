@@ -1,170 +1,45 @@
 {
     "savings": {
         "balance": {
-            "amount": 52775.0,
+            "amount": 8050.0,
             "currency": "TRY"
         },
         "transactions": [
             {
                 "amount": {
-                    "amount": 10000.0,
+                    "amount": 2000.0,
                     "currency": "TRY"
                 },
                 "description": "Deposit",
                 "type": "DEPOSIT",
-                "date": "2025-12-24 15:08:56"
+                "date": "2025-12-30 20:22:13"
             },
             {
                 "amount": {
-                    "amount": 10000.0,
+                    "amount": 1050.0,
                     "currency": "TRY"
                 },
-                "description": "Deposit",
-                "type": "DEPOSIT",
-                "date": "2025-12-24 15:09:17"
-            },
-            {
-                "amount": {
-                    "amount": 2.0,
-                    "currency": "TRY"
-                },
-                "description": "Withdrawal",
-                "type": "WITHDRAWAL",
-                "date": "2025-12-24 15:09:36"
-            },
-            {
-                "amount": {
-                    "amount": 400.0,
-                    "currency": "TRY"
-                },
-                "description": "Deposit",
-                "type": "DEPOSIT",
-                "date": "2025-12-24 15:16:53"
-            },
-            {
-                "amount": {
-                    "amount": 900.0,
-                    "currency": "TRY"
-                },
-                "description": "Withdrawal",
-                "type": "WITHDRAWAL",
-                "date": "2025-12-24 15:16:58"
-            },
-            {
-                "amount": {
-                    "amount": 300.0,
-                    "currency": "TRY"
-                },
-                "description": "Deposit",
-                "type": "DEPOSIT",
-                "date": "2025-12-24 15:27:53"
-            },
-            {
-                "amount": {
-                    "amount": 300.0,
-                    "currency": "TRY"
-                },
-                "description": "Deposit",
-                "type": "DEPOSIT",
-                "date": "2025-12-24 15:27:55"
-            },
-            {
-                "amount": {
-                    "amount": 10000.0,
-                    "currency": "TRY"
-                },
-                "description": "Withdrawal",
-                "type": "WITHDRAWAL",
-                "date": "2025-12-29 02:48:29"
-            },
-            {
-                "amount": {
-                    "amount": 700.0,
-                    "currency": "TRY"
-                },
-                "description": "Deposit",
-                "type": "DEPOSIT",
-                "date": "2025-12-29 02:49:24"
-            },
-            {
-                "amount": {
-                    "amount": 5000.0,
-                    "currency": "TRY"
-                },
-                "description": "Deposit",
-                "type": "DEPOSIT",
-                "date": "2025-12-29 02:49:38"
-            },
-            {
-                "amount": {
-                    "amount": 798.0,
-                    "currency": "TRY"
-                },
-                "description": "Withdrawal",
-                "type": "WITHDRAWAL",
-                "date": "2025-12-30 00:45:32"
-            },
-            {
-                "amount": {
-                    "amount": 5000.0,
-                    "currency": "TRY"
-                },
-                "description": "Deposit",
-                "type": "DEPOSIT",
-                "date": "2025-12-30 00:50:21"
-            },
-            {
-                "amount": {
-                    "amount": 5555.0,
-                    "currency": "TRY"
-                },
-                "description": "Deposit",
-                "type": "DEPOSIT",
-                "date": "2025-12-30 00:57:05"
-            },
-            {
-                "amount": {
-                    "amount": 5555.0,
-                    "currency": "TRY"
-                },
-                "description": "Deposit",
-                "type": "DEPOSIT",
-                "date": "2025-12-30 00:57:08"
-            },
-            {
-                "amount": {
-                    "amount": 5555.0,
-                    "currency": "TRY"
-                },
-                "description": "Deposit",
-                "type": "DEPOSIT",
-                "date": "2025-12-30 00:57:09"
-            },
-            {
-                "amount": {
-                    "amount": 5555.0,
-                    "currency": "TRY"
-                },
-                "description": "Deposit",
-                "type": "DEPOSIT",
-                "date": "2025-12-30 00:57:10"
-            },
-            {
-                "amount": {
-                    "amount": 5555.0,
-                    "currency": "TRY"
-                },
-                "description": "Deposit",
-                "type": "DEPOSIT",
-                "date": "2025-12-30 00:57:10"
+                "description": "Faiz Geliri (%15.0)",
+                "type": "INTEREST",
+                "date": "2025-12-30 20:22:17"
             }
         ]
     },
     "checking": {
         "balance": {
-            "amount": 2000.0,
+            "amount": 3000.0,
             "currency": "TRY"
         },
-        "transactions": []
+        "transactions": [
+            {
+                "amount": {
+                    "amount": 1000.0,
+                    "currency": "TRY"
+                },
+                "description": "Deposit",
+                "type": "DEPOSIT",
+                "date": "2025-12-30 20:22:01"
+            }
+        ]
     }
 }
